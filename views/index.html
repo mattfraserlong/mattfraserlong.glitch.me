@@ -23,7 +23,7 @@
         </form>
     </div>
   <div id="highscores">
-    <div id ="highscore header">High Scores</div>
+    <div id ="highscoreHeader">High Scores</div>
     <div id="scores"></div>
   </div>
 
@@ -48,7 +48,7 @@
         
         //button actions
         playerEnterBtn.addEventListener("click", init);
-        gameOverButton.addEventListener("click", restart);
+        gameOverButton.addEventListener("click", init);
 
         // game state variables declared
         var LASER_SPEED;
@@ -62,15 +62,14 @@
         //game object variables declared
         var controller;
         var livesNumber;
-        
-        //game over sign and button hidden to begin
+      
+        //first run div visibility options, before init triggered
         gameOverSign.style.visibility = "hidden";
         gameOverButton.style.visibility = "hidden";
         laserDiv.style.visibility = "hidden";
         heroDiv.style.visibility = "hidden";
         
-        
-        //interrogating high score DB
+        //interrogating db then pushing high scores to front end
         function getdbData() {           
             var HttpClient = function() {
                 this.get = function(aUrl, aCallback) {
@@ -91,19 +90,19 @@
             });
         }
 
-        // function to declare gamestate variables and divs' visibility
+        // init game states for first game play and all others
         function init() {
-            getdbData();
-            HERO_MOVEMENT = 5;
-            LASER_SPEED = 7;
-            ENEMY_SPEED = 2;
-            controller = new Object();
-            enemies = new Array();
-            score = 0;
-            livesNumber = 0;
-            active = true;
-
             if (!restartFlag) {
+              console.log("initial run triggered");
+              getdbData();
+              HERO_MOVEMENT = 5;
+              LASER_SPEED = 7;
+              ENEMY_SPEED = 2;
+              controller = new Object();
+              enemies = new Array();
+              score = 0;
+              livesNumber = 0;
+              active = true;
               form.style.visibility = "hidden";
               gameOverSign.style.visibility = "hidden";
               gameOverButton.style.visibility = "hidden";
@@ -113,17 +112,22 @@
               highscores.style.visibility = "hidden";
               gameOverButton.style.visibility = "hidden";
               gameOverSign.style.visibility = "hidden";
-            } else if (restartFlag) {          
-              form.style.visibility = "hidden";
-              gameOverSign.style.visibility = "hidden";
-              gameOverButton.style.visibility = "hidden";
-              laserDiv.style.visibility = "visible";
-              heroDiv.style.visibility = "visible";
-              scores.style.visibility = "hidden";
-              highscores.style.visibility = "hidden";
+              restartFlag = true;
+            } else if (restartFlag) {
+              console.log("restart triggered");
+              removeEnemy();
+              resetScore();
+              resetLives();
               form.style.visibility = "visible";
+              gameOverSign.style.visibility = "hidden";
+              gameOverButton.style.visibility = "hidden";
+              laserDiv.style.visibility = "visible";
+              heroDiv.style.visibility = "visible";
+              scores.style.visibility = "visible";
+              highscores.style.visibility = "visible";
               gameOverButton.style.visibility = "hidden";
               gameOverSign.style.visibility = "hidden";
+              restartFlag = false;
             }
 
             window.requestAnimationFrame(loop);
@@ -205,9 +209,6 @@
 
         function restart() {
             restart = true;
-            removeEnemy();
-            resetScore();
-            resetLives();
             init();
         }
 
