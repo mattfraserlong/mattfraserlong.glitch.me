@@ -16,9 +16,9 @@
     <div id="endGame">Game Over</div>
     <div id="restartBtn" class="button">Restart</div>
     <div id="form">
-        <form>
+        <form id="myForm" name="myForm">
             Player name:<br>
-            <input type="text" id="input" name="firstname" value="Enter initials" onfocus="this.value=''"><br>
+            <input type="text" id="input" name="name" value="Enter initials" onfocus="this.value=''"><br>
             <div id="playerEnterBtn" class="button">Enter</div>
         </form>
     </div>
@@ -45,6 +45,8 @@
         var scores = document.getElementById("scores");
         var highscores = document.getElementById("highscores");
         var playerEnterBtn = document.getElementById("playerEnterBtn");
+        var playerName;
+        var playerScore
         
         //button actions
         playerEnterBtn.addEventListener("click", init);
@@ -93,6 +95,8 @@
         // init game states for first game play and all others
         function init() {
             if (!restartFlag) {
+              var myForm = document.forms["myForm"].elements["name"].value;
+              console.log(myForm);
               console.log("initial run triggered");
               getdbData();
               HERO_MOVEMENT = 5;
@@ -113,7 +117,10 @@
               gameOverButton.style.visibility = "hidden";
               gameOverSign.style.visibility = "hidden";
               restartFlag = true;
+              
             } else if (restartFlag) {
+              var myForm = document.forms["myForm"].elements["name"].value;
+              console.log(myForm);
               console.log("restart triggered");
               removeEnemy();
               resetScore();
@@ -127,17 +134,12 @@
               highscores.style.visibility = "visible";
               gameOverButton.style.visibility = "hidden";
               gameOverSign.style.visibility = "hidden";
-              restartFlag = false;
             }
 
             window.requestAnimationFrame(loop);
         }
         
-        //get player name
-        function playerName() {
-            var nameValue = document.getElementById("input").value;
-            console.log(nameValue)
-        }
+
 
         // keep sprites on screen
         function ensureBounds(sprite, ignoreY) {
