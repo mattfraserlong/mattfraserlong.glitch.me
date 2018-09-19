@@ -134,6 +134,7 @@
               highscores.style.visibility = "visible";
               gameOverButton.style.visibility = "hidden";
               gameOverSign.style.visibility = "hidden";
+              restartFlag = false;
             }
 
             window.requestAnimationFrame(loop);
@@ -228,6 +229,7 @@
       
         //remove enemy on restart
         function removeEnemy() {
+          console.log('remove enemy call works');
             let all = document.getElementsByClassName('enemy');
             for (let i = 0; i < all.length; i++) {
                 all[i].style.visibility = 'hidden';
