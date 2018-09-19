@@ -1,9 +1,11 @@
 My invaders game with high score database
 
 
-Bugs:
+Build todos:
 
-:-) change init() so it restarts the game totally
+:-)Form data is being captured
+:-)Now just add playername to playerscore to a player object and pass it to db. 
+;-)Check data being collected correctly... console.log data producing at click of restart!
 
 
 App Todos:  
