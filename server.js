@@ -5,7 +5,8 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const shortId = require('shortid');
+const shortId = require('shortid')
+
 
 
 //create mongoose schema for users and their data
