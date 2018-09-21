@@ -28,7 +28,7 @@
   </div>
 
     <script>
-        
+      
         // controller variables assigned
         const LEFT_KEY = 37;
         const UP_KEY = 38;
@@ -45,7 +45,6 @@
         var scores = document.getElementById("scores");
         var highscores = document.getElementById("highscores");
         var playerEnterBtn = document.getElementById("playerEnterBtn");
-
         
         //button actions
         playerEnterBtn.addEventListener("click", init);
@@ -94,7 +93,6 @@
       
       //sending json object to the database
       function senddbData(myForm, score) {
-        console.log("send called");
         xhr = new XMLHttpRequest();
         var url = "https://mattfraserlong.glitch.me/api/space-invader-post";
         xhr.open("POST", url, true);
@@ -107,7 +105,6 @@
       
         var data = JSON.stringify({"playerName":playerName, "playerScore":score});
         xhr.send(data);
-        console.log(data);
       }
 
         // init game states for first game play and all others
@@ -373,5 +370,4 @@
         
     </script>
 </body>
-
 </html>

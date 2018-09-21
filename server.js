@@ -53,16 +53,14 @@ app.use(bodyParser.json());
 app.post('/api/space-invader-post',function (req, res) {
   var playerInst = new Player ({ 
       playerName: req.body.playerName,
-      score: req.body.score
+      score: req.body.playerScore
       });
   
   playerInst.save(function(err) {
       if(err) {
         res.send("err saving to db.")
-        console.log("err saving to db");
       } else {
         res.send("successfully saved.")
-        console.log("successfully saved.");
       }
   });
 });
