@@ -50,8 +50,8 @@ app.use(bodyParser.json());
 /*----post requests----*/
 
 //route for posting new user to db
-app.post('/api/space-invader',function (req, res) {
-  var playerInst = new Player ({   //https://www.journaldev.com/6270/mongodb-sort
+app.post('/api/space-invader-post',function (req, res) {
+  var playerInst = new Player ({ 
       playerName: req.body.playerName,
       score: req.body.score
       });
@@ -72,14 +72,17 @@ app.post('/api/space-invader',function (req, res) {
 app.get('/api/space-invader', function(req, res){
 
   Player.find({}).sort('-score').limit(5).exec(function(err, docs) {
+    if(docs.length !== 0) {
     var array = []
-    for (var i = 0; i < 5; i++) {
+    for (var i = 0; i < docs.length; i++) {
       var element = "<p>" + docs[i].playerName + ": " + docs[i].score + "</p>";
       array.push (element);
     }
     var stringtoSend = array.join("");
-    console.log(stringtoSend);
     res.send(stringtoSend);
+    } else {
+    res.send("No high scores yet");
+    }
   });
 
 })

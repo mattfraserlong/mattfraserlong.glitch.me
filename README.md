@@ -1,11 +1,11 @@
 My invaders game with high score database
 
 
+
 Build todos:
 
-:-)Form data is being captured
-:-)Now just add playername to playerscore to a player object and pass it to db. 
-;-)Check data being collected correctly... console.log data producing at click of restart!
+:-)playerName being posted to DB as object but not score;
+:-)Need to change score from string to number in server before it is sent to DB
 
 
 App Todos:  

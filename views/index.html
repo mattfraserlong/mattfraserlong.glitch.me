@@ -45,8 +45,7 @@
         var scores = document.getElementById("scores");
         var highscores = document.getElementById("highscores");
         var playerEnterBtn = document.getElementById("playerEnterBtn");
-        var playerName;
-        var playerScore
+
         
         //button actions
         playerEnterBtn.addEventListener("click", init);
@@ -60,6 +59,7 @@
         var enemies;
         var score;
         var restartFlag = false;
+        var playerName;
 
         //game object variables declared
         var controller;
@@ -91,13 +91,29 @@
             scores.innerHTML = (response);
             });
         }
+      
+      //sending json object to the database
+      function senddbData(myForm, score) {
+        console.log("send called");
+        xhr = new XMLHttpRequest();
+        var url = "https://mattfraserlong.glitch.me/api/space-invader-post";
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("Content-type", "application/json");
+        xhr.onreadystatechange = function () { 
+          if (xhr.readyState == 4 && xhr.status == 200) {
+              var json = JSON.stringify(xhr.responseText);
+          }
+        }
+      
+        var data = JSON.stringify({"playerName":playerName, "playerScore":score});
+        xhr.send(data);
+        console.log(data);
+      }
 
         // init game states for first game play and all others
         function init() {
             if (!restartFlag) {
-              var myForm = document.forms["myForm"].elements["name"].value;
-              console.log(myForm);
-              console.log("initial run triggered");
+              playerName = document.forms["myForm"].elements["name"].value;
               getdbData();
               HERO_MOVEMENT = 5;
               LASER_SPEED = 7;
@@ -119,9 +135,7 @@
               restartFlag = true;
               
             } else if (restartFlag) {
-              var myForm = document.forms["myForm"].elements["name"].value;
-              console.log(myForm);
-              console.log("restart triggered");
+              playerName = document.forms["myForm"].elements["name"].value;
               removeEnemy();
               resetScore();
               resetLives();
@@ -139,8 +153,6 @@
 
             window.requestAnimationFrame(loop);
         }
-        
-
 
         // keep sprites on screen
         function ensureBounds(sprite, ignoreY) {
@@ -188,7 +200,6 @@
             for (let i = 0; i < enemies.length; i++) {
                 enemies[i].y += ENEMY_SPEED;
                 ensureBounds(enemies[i], true);
-
             }
         }
 
@@ -207,6 +218,7 @@
             active = false;
             gameOverSign.style.visibility = "visible";
             gameOverButton.style.visibility = "visible";
+            senddbData(playerName, score);
             getdbData();
         }
 
@@ -229,7 +241,6 @@
       
         //remove enemy on restart
         function removeEnemy() {
-          console.log('remove enemy call works');
             let all = document.getElementsByClassName('enemy');
             for (let i = 0; i < all.length; i++) {
                 all[i].style.visibility = 'hidden';
