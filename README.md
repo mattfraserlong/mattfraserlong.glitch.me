@@ -12,7 +12,6 @@ App Todos:
 :-) hide all js from browser with closure  
 :-) Change game to be more like space-invaders?  
 :-) Or, game version with falling divs, but points lost if enemies hit bottom
-:-) Seperate game out from server.js into app.js
 
 
 Other Todos:  
